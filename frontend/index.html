@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark" data-accent="amber">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>INSIGHT // AI Pulse &amp; Code Velocity</title>
-
+<title>INSIGHT // Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
@@ -15,14 +14,13 @@
 </head>
 <body>
 
-<!-- ============ AMBIENT LAYERS ============ -->
 <div class="grain" aria-hidden="true"></div>
 <div class="vignette" aria-hidden="true"></div>
 
-<!-- ============ TOPBAR ============ -->
+<!-- ===== TOPBAR ===== -->
 <header class="topbar" role="banner">
   <div class="topbar-inner">
-    <a class="brand" href="/">
+    <a class="brand" href="#/">
       <svg class="brand-glyph" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <rect x="2" y="2" width="36" height="36" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
         <path d="M9 28 L9 14 M9 14 L17 22 M17 22 L17 14 M23 28 L23 14 M23 14 L31 22 M31 22 L31 14"
@@ -38,371 +36,86 @@
       </svg>
       <div class="brand-text">
         <div class="brand-line-1">INSIGHT<span class="brand-sep">/</span><em>console</em></div>
-        <div class="brand-line-2">Pulse · Velocity · Research · Weights — est. 2026.06</div>
+        <div class="brand-line-2" data-i18n="app.tagline">A reading room for machine intelligence & the code that runs it.</div>
       </div>
     </a>
 
-    <nav class="topnav" aria-label="primary">
-      <span class="topnav-item active" data-key="all">All</span>
-      <span class="topnav-item" data-key="pulse">Pulse</span>
-      <span class="topnav-item" data-key="velocity">Velocity</span>
-      <span class="topnav-item" data-key="research">Research</span>
-      <span class="topnav-item" data-key="weights">Weights</span>
+    <nav class="topnav" id="topnav" aria-label="primary">
+      <a class="topnav-item" data-route="#/" data-i18n="nav.home">Home</a>
+      <a class="topnav-item" data-route="#/pulse" data-i18n="nav.pulse">Pulse</a>
+      <a class="topnav-item" data-route="#/velocity" data-i18n="nav.velocity">Velocity</a>
+      <a class="topnav-item" data-route="#/lab" data-i18n="nav.lab">Lab</a>
+      <a class="topnav-item" data-route="#/weights" data-i18n="nav.weights">Weights</a>
+      <a class="topnav-item" data-route="#/history" data-i18n="nav.history">History</a>
+      <a class="topnav-item" data-route="#/digest" data-i18n="tool.digest.name">Digest</a>
+      <a class="topnav-item" data-route="#/settings" data-i18n="nav.settings">Settings</a>
     </nav>
 
     <div class="topbar-right">
-      <button class="btn btn-ghost btn-sm" id="btnExportBookmarks" type="button" title="Export bookmarks as Markdown">★ Bookmarks</button>
+      <button class="btn btn-ghost btn-sm" id="btnExportBookmarks" type="button" title="Export bookmarks">
+        <span class="bk-glyph">★</span> <span data-i18n="nav.bookmarks">Bookmarks</span>
+      </button>
+      <div class="lang-switch" role="group" aria-label="language">
+        <button class="lang-btn" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="zh-CN" type="button">中</button>
+      </div>
+      <button class="theme-btn" id="themeBtn" type="button" title="Toggle theme">
+        <span class="theme-icon-dark" aria-hidden="true">◐</span>
+      </button>
+      <button class="accent-btn" id="accentBtn" type="button" title="Cycle accent">
+        <span class="accent-dot" aria-hidden="true"></span>
+      </button>
       <div class="clock" id="clock" title="Local time">
         <span class="clock-hm">--:--</span>
         <span class="clock-sep">·</span>
         <span class="clock-s">--</span>
-        <span class="clock-tz" id="clockTz">UTC+8</span>
       </div>
       <div class="status" id="status" data-state="idle">
         <span class="status-led"></span>
-        <span class="status-label" id="statusLabel">Initializing</span>
-        <span class="status-meta" id="statusMeta">— — —</span>
+        <span class="status-label" id="statusLabel" data-i18n="status.connecting">Connecting</span>
       </div>
     </div>
   </div>
 </header>
 
-<!-- ============ MASTHEAD ============ -->
-<section class="masthead">
-  <div class="masthead-inner">
-    <div class="mast-left">
-      <div class="kicker">Volume 01 · Issue 013</div>
-      <h1 class="mast-title">
-        A reading room for <span class="ink">machine intelligence</span>
-        <span class="amp">&amp;</span>
-        <span class="ink-2">the code that runs it</span>
-      </h1>
-      <p class="mast-sub">
-        A live, multi-source digest of what shipped, what broke, and what everyone is reading —
-        curated across 15 RSS feeds, Hacker News streams, the official GitHub trending index, and
-        the public REST search index. Two panels, one screen, zero algorithms deciding what you
-        see first &mdash; only a transparent relevance × recency × source-weight score.
-      </p>
-    </div>
-    <aside class="mast-right">
-      <dl class="mast-stats">
-        <div><dt>Total sources</dt><dd id="mSources">—</dd></div>
-        <div><dt>Last ingest</dt><dd id="mIngest">—</dd></div>
-        <div><dt>Bookmarks</dt><dd id="mBookmarks">0</dd></div>
-        <div><dt>Editorial bias</dt><dd>none</dd></div>
-      </dl>
-    </aside>
-  </div>
-</section>
+<!-- ===== MAIN VIEW (SPA) ===== -->
+<main id="view" class="view"></main>
 
-<!-- ============ MAIN GRID ============ -->
-<main class="grid" id="grid">
-
-  <!-- ===== AI Pulse panel ===== -->
-  <article class="panel" id="panel-ai" data-kind="pulse">
-    <header class="panel-head">
-      <div class="panel-id">
-        <span class="panel-num">01</span>
-        <div class="panel-titles">
-          <h2 class="panel-title">AI Pulse <span class="panel-chn">/ 智能体日报</span></h2>
-          <p class="panel-deck">
-            Multi-source RSS aggregation. Each item is ranked by
-            <em>0.50 · AI-relevance</em> +
-            <em>0.30 · recency</em> +
-            <em>0.20 · source authority</em>.
-          </p>
-        </div>
-      </div>
-      <div class="panel-ctas">
-        <button class="btn btn-ghost" id="btnReloadAi" type="button">Re-read cache</button>
-        <button class="btn btn-primary" id="btnFetchAi" type="button">
-          <span class="btn-label">Ingest now</span>
-          <span class="btn-arrow" aria-hidden="true">↗</span>
-          <span class="btn-spinner" aria-hidden="true"></span>
-        </button>
-      </div>
-    </header>
-
-    <div class="panel-strip">
-      <div class="strip-cell">
-        <span class="cell-k">Generated</span>
-        <span class="cell-v mono" id="aiGenerated" title="—">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">RSS feeds</span>
-        <span class="cell-v mono"><span id="aiSources">—</span> <span class="cell-unit">live</span></span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Raw items</span>
-        <span class="cell-v mono" id="aiRaw">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">After dedup</span>
-        <span class="cell-v mono"><span id="aiUnique">—</span> <span class="cell-unit">kept</span></span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Top score</span>
-        <span class="cell-v mono accent" id="aiTopScore">—</span>
-      </div>
-    </div>
-
-    <nav class="tabs" id="aiTabs" aria-label="AI Pulse filters">
-      <button class="tab is-on" data-tab="all" type="button">All<span class="tab-n mono" id="cntAll">0</span></button>
-      <button class="tab" data-tab="zh" type="button">中文<span class="tab-n mono" id="cntZh">0</span></button>
-      <button class="tab" data-tab="en" type="button">English<span class="tab-n mono" id="cntEn">0</span></button>
-      <div class="tabs-spacer"></div>
-      <label class="search">
-        <span class="search-ic" aria-hidden="true">⌕</span>
-        <input id="aiSearch" type="search" placeholder="search title or source…" autocomplete="off" />
-        <kbd class="search-kbd">/</kbd>
-      </label>
-    </nav>
-
-    <div class="list" id="aiList" role="feed" aria-busy="false">
-      <div class="empty" data-state="rest">
-        <div class="empty-mark">∅</div>
-        <h3>No digest in memory</h3>
-        <p>Hit <em>Ingest now</em> to pull the freshest items from 15 RSS feeds. Takes 30–60 seconds on a cold cache.</p>
-      </div>
-    </div>
-  </article>
-
-  <!-- ===== Code Velocity panel ===== -->
-  <article class="panel" id="panel-gh" data-kind="velocity">
-    <header class="panel-head">
-      <div class="panel-id">
-        <span class="panel-num">02</span>
-        <div class="panel-titles">
-          <h2 class="panel-title">Code Velocity <span class="panel-chn">/ GitHub 热门</span></h2>
-          <p class="panel-deck">
-            Two-track. <em>Track A</em> scrapes <code>github.com/trending</code> for the
-            official daily/weekly/monthly cuts. <em>Track B</em> hits the REST search
-            index for recent &amp; active repos. We score the union.
-          </p>
-        </div>
-      </div>
-      <div class="panel-ctas">
-        <button class="btn btn-ghost" id="btnReloadGh" type="button">Re-read cache</button>
-        <button class="btn btn-primary" id="btnFetchGh" type="button">
-          <span class="btn-label">Ingest now</span>
-          <span class="btn-arrow" aria-hidden="true">↗</span>
-          <span class="btn-spinner" aria-hidden="true"></span>
-        </button>
-      </div>
-    </header>
-
-    <div class="panel-strip">
-      <div class="strip-cell">
-        <span class="cell-k">Generated</span>
-        <span class="cell-v mono" id="ghGenerated" title="—">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Unique repos</span>
-        <span class="cell-v mono" id="ghUnique">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Tracks</span>
-        <span class="cell-v mono">A · B</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Window</span>
-        <span class="cell-v mono">7–30d</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Top score</span>
-        <span class="cell-v mono accent" id="ghTopScore">—</span>
-      </div>
-    </div>
-
-    <nav class="tabs" id="ghTabs" aria-label="GitHub filters">
-      <button class="tab is-on" data-tab="composite" type="button">Composite<span class="tab-n mono" id="cntComposite">0</span></button>
-      <button class="tab" data-tab="trending_daily" type="button">Today<span class="tab-n mono" id="cntDaily">0</span></button>
-      <button class="tab" data-tab="trending_weekly" type="button">This week<span class="tab-n mono" id="cntWeekly">0</span></button>
-      <button class="tab" data-tab="trending_monthly" type="button">This month<span class="tab-n mono" id="cntMonthly">0</span></button>
-      <button class="tab" data-tab="recent_7d_popular" type="button">Recent hot<span class="tab-n mono" id="cntRecent">0</span></button>
-      <button class="tab" data-tab="active_30d" type="button">Still active<span class="tab-n mono" id="cntActive">0</span></button>
-      <div class="tabs-spacer"></div>
-      <label class="search">
-        <span class="search-ic" aria-hidden="true">⌕</span>
-        <input id="ghSearch" type="search" placeholder="search repo, description, language…" autocomplete="off" />
-        <kbd class="search-kbd">/</kbd>
-      </label>
-    </nav>
-
-    <div class="list" id="ghList" role="feed" aria-busy="false">
-      <div class="empty" data-state="rest">
-        <div class="empty-mark">∅</div>
-        <h3>No index in memory</h3>
-        <p>Hit <em>Ingest now</em> to pull trending + REST results. Takes 15–30 seconds on a cold cache.</p>
-      </div>
-    </div>
-  </article>
-
-  <!-- ===== arXiv panel ===== -->
-  <article class="panel" id="panel-arx" data-kind="arxiv">
-    <header class="panel-head">
-      <div class="panel-id">
-        <span class="panel-num">03</span>
-        <div class="panel-titles">
-          <h2 class="panel-title">From the Lab <span class="panel-chn">/ arXiv 论文</span></h2>
-          <p class="panel-deck">
-            Latest submissions in <em>cs.AI</em> and <em>cs.CL</em>, sorted by submission date.
-            The first place new ideas appear &mdash; usually 2&ndash;6 weeks before they hit the press.
-          </p>
-        </div>
-      </div>
-      <div class="panel-ctas">
-        <button class="btn btn-ghost" id="btnReloadArx" type="button">Re-read cache</button>
-        <button class="btn btn-primary" id="btnFetchArx" type="button">
-          <span class="btn-label">Ingest now</span>
-          <span class="btn-arrow" aria-hidden="true">↗</span>
-          <span class="btn-spinner" aria-hidden="true"></span>
-        </button>
-      </div>
-    </header>
-
-    <div class="panel-strip">
-      <div class="strip-cell">
-        <span class="cell-k">Generated</span>
-        <span class="cell-v mono" id="arxGenerated" title="—">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Papers</span>
-        <span class="cell-v mono" id="arxPapers">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Categories</span>
-        <span class="cell-v mono">cs.AI · cs.CL</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Source</span>
-        <span class="cell-v mono">export.arxiv.org</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Latest</span>
-        <span class="cell-v mono accent" id="arxLatest">—</span>
-      </div>
-    </div>
-
-    <nav class="tabs" id="arxTabs" aria-label="arXiv filters">
-      <button class="tab is-on" data-tab="papers" type="button">All papers<span class="tab-n mono" id="cntArxAll">0</span></button>
-      <button class="tab" data-tab="cs.AI" type="button">cs.AI<span class="tab-n mono" id="cntArxAi">0</span></button>
-      <button class="tab" data-tab="cs.CL" type="button">cs.CL<span class="tab-n mono" id="cntArxCl">0</span></button>
-      <button class="tab" data-tab="cs.LG" type="button">cs.LG<span class="tab-n mono" id="cntArxLg">0</span></button>
-      <div class="tabs-spacer"></div>
-      <label class="search">
-        <span class="search-ic" aria-hidden="true">⌕</span>
-        <input id="arxSearch" type="search" placeholder="search title or author…" autocomplete="off" />
-        <kbd class="search-kbd">/</kbd>
-      </label>
-    </nav>
-
-    <div class="list" id="arxList" role="feed" aria-busy="false">
-      <div class="empty" data-state="rest">
-        <div class="empty-mark">∅</div>
-        <h3>No arXiv snapshot</h3>
-        <p>Hit <em>Ingest now</em> to pull the most recent cs.AI &amp; cs.CL submissions.</p>
-      </div>
-    </div>
-  </article>
-
-  <!-- ===== HuggingFace panel ===== -->
-  <article class="panel" id="panel-hf" data-kind="huggingface">
-    <header class="panel-head">
-      <div class="panel-id">
-        <span class="panel-num">04</span>
-        <div class="panel-titles">
-          <h2 class="panel-title">Open Weights <span class="panel-chn">/ HuggingFace</span></h2>
-          <p class="panel-deck">
-            Trending <em>models</em>, <em>datasets</em>, and <em>daily papers</em> on HuggingFace.
-            The live signal for what the open-source community is shipping right now.
-          </p>
-        </div>
-      </div>
-      <div class="panel-ctas">
-        <button class="btn btn-ghost" id="btnReloadHf" type="button">Re-read cache</button>
-        <button class="btn btn-primary" id="btnFetchHf" type="button">
-          <span class="btn-label">Ingest now</span>
-          <span class="btn-arrow" aria-hidden="true">↗</span>
-          <span class="btn-spinner" aria-hidden="true"></span>
-        </button>
-      </div>
-    </header>
-
-    <div class="panel-strip">
-      <div class="strip-cell">
-        <span class="cell-k">Generated</span>
-        <span class="cell-v mono" id="hfGenerated" title="—">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Models</span>
-        <span class="cell-v mono" id="hfModels">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Datasets</span>
-        <span class="cell-v mono" id="hfDatasets">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Papers</span>
-        <span class="cell-v mono" id="hfPapers">—</span>
-      </div>
-      <div class="strip-cell">
-        <span class="cell-k">Source</span>
-        <span class="cell-v mono">huggingface.co</span>
-      </div>
-    </div>
-
-    <nav class="tabs" id="hfTabs" aria-label="HuggingFace filters">
-      <button class="tab is-on" data-tab="models" type="button">Models<span class="tab-n mono" id="cntHfModels">0</span></button>
-      <button class="tab" data-tab="datasets" type="button">Datasets<span class="tab-n mono" id="cntHfDatasets">0</span></button>
-      <button class="tab" data-tab="papers" type="button">Daily papers<span class="tab-n mono" id="cntHfPapers">0</span></button>
-      <div class="tabs-spacer"></div>
-      <label class="search">
-        <span class="search-ic" aria-hidden="true">⌕</span>
-        <input id="hfSearch" type="search" placeholder="search model or dataset…" autocomplete="off" />
-        <kbd class="search-kbd">/</kbd>
-      </label>
-    </nav>
-
-    <div class="list" id="hfList" role="feed" aria-busy="false">
-      <div class="empty" data-state="rest">
-        <div class="empty-mark">∅</div>
-        <h3>No HuggingFace snapshot</h3>
-        <p>Hit <em>Ingest now</em> to pull trending models, datasets, and daily papers.</p>
-      </div>
-    </div>
-  </article>
-</main>
-
-<!-- ============ COLOPHON ============ -->
+<!-- ===== FOOTER ===== -->
 <footer class="footbar">
   <div class="footbar-inner">
     <div class="foot-col">
-      <div class="foot-h">Colophon</div>
-      <p>Set in <span class="font-name">IBM Plex Sans</span>, <span class="font-name">IBM Plex Mono</span>, and <span class="font-name">Fraunces</span> (display). No frameworks. No tracking. Rendered in the browser. Cached on disk in <code>data/</code>.</p>
+      <div class="foot-h" data-i18n="app.colophon">Colophon</div>
+      <p>
+        Set in
+        <span class="font-name">IBM Plex Sans</span>,
+        <span class="font-name">IBM Plex Mono</span>, and
+        <span class="font-name">Fraunces</span>.
+        No frameworks. No tracking. Cached on disk in <code>data/</code>.
+      </p>
     </div>
     <div class="foot-col">
-      <div class="foot-h">Endpoints</div>
-      <p><a href="/api/status" target="_blank" rel="noopener"><code>GET /api/status</code></a> &middot;
-        <a href="/api/ai-daily/data" target="_blank" rel="noopener"><code>GET /api/ai-daily/data</code></a> &middot;
-        <a href="/api/github/data" target="_blank" rel="noopener"><code>GET /api/github/data</code></a></p>
+      <div class="foot-h" data-i18n="app.endpoints">Endpoints</div>
+      <p>
+        <a href="/api/status" target="_blank" rel="noopener"><code>GET /api/status</code></a> &middot;
+        <a href="/api/history" target="_blank" rel="noopener"><code>GET /api/history</code></a> &middot;
+        <a href="/api/i18n/en" target="_blank" rel="noopener"><code>GET /api/i18n/en</code></a>
+      </p>
     </div>
     <div class="foot-col">
-      <div class="foot-h">Status</div>
+      <div class="foot-h" data-i18n="app.status">Status</div>
       <p id="footStatus">Operational. Build 2026.06.13.</p>
     </div>
   </div>
 </footer>
 
-<!-- ============ TOAST + PROGRESS ============ -->
 <div class="toast" id="toast" role="status" aria-live="polite">
   <span class="toast-mark"></span>
   <span class="toast-msg"></span>
 </div>
-
 <div class="progress" id="progress" hidden>
   <div class="progress-track"><div class="progress-bar"></div></div>
-  <div class="progress-label mono" id="progressLabel">Ingesting…</div>
+  <div class="progress-label mono" id="progressLabel">Working…</div>
 </div>
 
 <script src="app.js"></script>

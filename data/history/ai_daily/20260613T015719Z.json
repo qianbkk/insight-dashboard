@@ -1,0 +1,1034 @@
+{
+  "_meta": {
+    "kind": "ai_daily",
+    "ts": "20260613T015719Z",
+    "iso": "2026-06-13T01:57:19.880859+00:00",
+    "size": 27730
+  },
+  "generated_at": "2026-06-13T01:55:11.800149+00:00",
+  "total_sources": 15,
+  "total_raw": 120,
+  "total_unique": 33,
+  "top_items": [
+    {
+      "title": "Why “reprogramming” is the buzziest approach to reversing aging right now",
+      "url": "https://www.technologyreview.com/2026/06/12/1138829/reprogramming-buzziest-approach-reversing-aging-right-now/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-12T09:00:00+00:00",
+      "summary": "Earlier this week, Life Biosciences, a biotech company focused on reversing age-related diseases, announced that it had dosed its first volunteer. A person with glaucoma has had an experimental treatment injected straight into their eyeball. The idea is to try to treat the disease—which can cause vision loss—by regenerating healthy nerves in the eye. But&#8230;",
+      "author": "Jessica Hamzelou",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.901,
+      "url_hash": "3553f6a4a210"
+    },
+    {
+      "title": "“智能体最后的考试”，Fable 5竟然不敌GPT 5.5",
+      "url": "https://www.qbitai.com/2026/06/434774.html",
+      "source": "量子位",
+      "published": "2026-06-12T04:13:23+00:00",
+      "summary": "",
+      "author": "一水",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.89,
+      "url_hash": "8f108a40eeae"
+    },
+    {
+      "title": "Google DeepMind is worried about what happens when millions of agents start to interact",
+      "url": "https://www.technologyreview.com/2026/06/11/1138794/google-deepmind-is-worried-about-what-happens-when-millions-of-agents-start-to-interact/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-11T11:00:45+00:00",
+      "summary": "Google DeepMind is funding research into the potential dangers of situations where millions of different AI agents interact with each other online. According to Rohin Shah, who directs the company’s AGI safety and alignment research, the mass-market arrival of agents that can carry out tasks without human oversight and follow instructions given to them by other&#8230;",
+      "author": "Will Douglas Heaven",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.886,
+      "url_hash": "5fa3405179d5"
+    },
+    {
+      "title": "Show HN: AccInt – a Work Model for AI coding agents",
+      "url": "https://accint.xyz/",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-13T01:25:10+00:00",
+      "summary": "",
+      "author": "maxbaluev",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.885,
+      "url_hash": "937bee94d6c6"
+    },
+    {
+      "title": "Trump admin blocks foreign access to Anthropic's most powerful AI models",
+      "url": "https://www.axios.com/2026/06/12/anthropic-trump-mythos-fable-national-security",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T23:52:27+00:00",
+      "summary": "",
+      "author": "some-guy",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.885,
+      "url_hash": "ee3a2b90ff67"
+    },
+    {
+      "title": "SentinelMCP – An open-source firewall for AI agents that use MCP",
+      "url": "https://github.com/technosiveuk-ui/SentinelMCP",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-13T01:51:11+00:00",
+      "summary": "",
+      "author": "technsoive",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.88,
+      "url_hash": "30be5f4a61fd"
+    },
+    {
+      "title": "We've suspended access to Claude Mythos 5 and Claude Fable 5",
+      "url": "https://status.claude.com/incidents/s9w82lp9dcn9",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-13T00:58:06+00:00",
+      "summary": "",
+      "author": "jesse_dot_id",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.88,
+      "url_hash": "5caf59a41944"
+    },
+    {
+      "title": "Claude Fable 5省钱秘诀来了：调成Low档比Opus更便宜",
+      "url": "https://www.qbitai.com/2026/06/434571.html",
+      "source": "量子位",
+      "published": "2026-06-11T08:23:31+00:00",
+      "summary": "",
+      "author": "henry",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.88,
+      "url_hash": "ee717c42d5d2"
+    },
+    {
+      "title": "The Download: “reprogramming” aging, and the hidden sense of interoception",
+      "url": "https://www.technologyreview.com/2026/06/12/1138899/the-download-reprogramming-reverse-aging-interoception/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-12T12:10:00+00:00",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. Why “reprogramming” is the buzziest approach to reversing aging right now Earlier this week, Life Biosciences, a biotech company focused on reversing age-related diseases, announced that it had dosed its first&#8230;",
+      "author": "Thomas Macaulay",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.861,
+      "url_hash": "2ad84e39a253"
+    },
+    {
+      "title": "Anthropic老大的唯一 -1，就是AI股神的未婚妻",
+      "url": "https://www.qbitai.com/2026/06/433717.html",
+      "source": "量子位",
+      "published": "2026-06-12T07:29:59+00:00",
+      "summary": "",
+      "author": "闻乐",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.855,
+      "url_hash": "3c9552168b47"
+    },
+    {
+      "title": "New Claude model - Fable",
+      "url": "https://www.bensbites.com/p/new-claude-model-fable",
+      "source": "Ben's Bites",
+      "published": "2026-06-11T13:03:20+00:00",
+      "summary": "everyone's building with it.",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "c5b2319b074f"
+    },
+    {
+      "title": "Ask HN: What will be the next big memory management system for AI Agents?",
+      "url": "https://news.ycombinator.com/item?id=48510721",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T23:44:47+00:00",
+      "summary": "",
+      "author": "AlanAAG",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "1f65b0586d44"
+    },
+    {
+      "title": "Ask HN: How are you designing human review for production AI agents?",
+      "url": "https://news.ycombinator.com/item?id=48510369",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T22:58:31+00:00",
+      "summary": "",
+      "author": "willXare",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "55f4c9dfbda8"
+    },
+    {
+      "title": "I created an AI agent that finds investors that and does reachouts to investors",
+      "url": "https://news.ycombinator.com/item?id=48509761",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T21:42:22+00:00",
+      "summary": "",
+      "author": "west_subject",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "6b9956ea30bc"
+    },
+    {
+      "title": "氪星晚报｜SpaceX确定发行价，募资750亿美元创史上最大IPO；OpenAI CEO奥特曼推迟访韩计划；中央网信办举报中心开设“涉AI应用乱象举报专区”",
+      "url": "https://36kr.com/p/3849942472512769?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-12T13:15:02+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.841,
+      "url_hash": "89d869db9c7f"
+    },
+    {
+      "title": "特朗普政府禁止境外主体获取Anthropic旗下最强人工智能模型",
+      "url": "https://36kr.com/newsflashes/3850886715446274?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-13T01:17:22+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.841,
+      "url_hash": "ab48b944d78b"
+    },
+    {
+      "title": "美多州总检察长联合调查OpenAI",
+      "url": "https://36kr.com/newsflashes/3850885678306561?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-13T01:11:23+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.841,
+      "url_hash": "7faf879bd287"
+    },
+    {
+      "title": "氪星晚报｜百万Token只要几块钱，算力价格还在往下降；OpenAI正考虑大幅下调产品价格；今起儿童旅客可购买铁路旅游计次票，票价为成人旅客的5折",
+      "url": "https://36kr.com/p/3848516305605892?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-11T11:00:00+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.836,
+      "url_hash": "4c278003fc3d"
+    },
+    {
+      "title": "The Download: soccer’s data renaissance and China’s big nuclear plans",
+      "url": "https://www.technologyreview.com/2026/06/11/1138809/the-download-soccer-football-data-analytics-china-nuclear-power/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-11T12:10:00+00:00",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. Inside soccer’s data renaissance Imagine tuning in to the opening kickoff of a World Cup match and seeing a player intentionally kick the ball out of bounds. You may question the&#8230;",
+      "author": "Thomas Macaulay",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.816,
+      "url_hash": "2e52d71156ea"
+    },
+    {
+      "title": "Inside soccer’s data renaissance",
+      "url": "https://www.technologyreview.com/2026/06/11/1138506/inside-soccer-data-renaissance-jesse-davis/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-11T10:00:00+00:00",
+      "summary": "Imagine tuning in to the opening kickoff of a World Cup match and seeing a player intentionally send the ball all the way down the pitch and right out of bounds on the opponent’s end. Casual fans might scratch their heads. Where’s the logic in surrendering possession seconds into a game? If you were Jesse&#8230;",
+      "author": "Andrew Zaleski",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.816,
+      "url_hash": "d64a6f7de63c"
+    },
+    {
+      "title": "1290万高考生看过来！阿里出了个志愿填报Agent，免费的",
+      "url": "https://www.qbitai.com/2026/06/434558.html",
+      "source": "量子位",
+      "published": "2026-06-11T07:25:55+00:00",
+      "summary": "",
+      "author": "衡宇",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.81,
+      "url_hash": "beaac21152a1"
+    },
+    {
+      "title": "Erdős Problems and Speculations about the Power of AI Models",
+      "url": "https://www.youtube.com/watch?v=KbNctTQnVHI",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T23:14:19+00:00",
+      "summary": "",
+      "author": "maayank",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.75,
+      "url_hash": "5a4ecb06ce91"
+    },
+    {
+      "title": "Teaching AI agents to ask better questions by playing “Battleship”",
+      "url": "https://news.mit.edu/2026/teaching-ai-agents-ask-better-questions-playing-battleship-0603",
+      "source": "MIT News - AI",
+      "published": "2026-06-03T21:00:00+00:00",
+      "summary": "MIT researchers use the classic game as a test bed for AI agents, finding a small AI model can outperform the biggest ones at 1 percent of the cost.",
+      "author": "Alex Shipps | MIT CSAIL",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.695,
+      "url_hash": "d6335a1caa1c"
+    },
+    {
+      "title": "Opus 4.8",
+      "url": "https://www.bensbites.com/p/opus-48",
+      "source": "Ben's Bites",
+      "published": "2026-06-02T13:29:05+00:00",
+      "summary": "NVIDIA and Microsoft birthed a new computer",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "c6d92f6106dd"
+    },
+    {
+      "title": "I signed up for another SaaS",
+      "url": "https://www.bensbites.com/p/i-signed-up-for-another-saas",
+      "source": "Ben's Bites",
+      "published": "2026-05-28T13:03:27+00:00",
+      "summary": "new software benchmark",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "96f6d8cbeac1"
+    },
+    {
+      "title": "Is SaaS dead?",
+      "url": "https://www.bensbites.com/p/is-saas-dead",
+      "source": "Ben's Bites",
+      "published": "2026-05-26T13:10:52+00:00",
+      "summary": "MCP comeback in works",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "4fb481f15470"
+    },
+    {
+      "title": "Google's take on openclaw",
+      "url": "https://www.bensbites.com/p/googles-take-on-openclaw",
+      "source": "Ben's Bites",
+      "published": "2026-05-21T13:03:23+00:00",
+      "summary": "it's Anthropic's time for the mandate of heaven",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "e16ad69717c6"
+    },
+    {
+      "title": "Can I get my agents on the phone?",
+      "url": "https://www.bensbites.com/p/can-i-get-my-agents-on-the-phone",
+      "source": "Ben's Bites",
+      "published": "2026-05-19T13:01:25+00:00",
+      "summary": "I haven&#8217;t used OpenClaw in weeks",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "01f652f2f97f"
+    },
+    {
+      "title": "Agents feedback tip",
+      "url": "https://www.bensbites.com/p/agents-feedback-tip",
+      "source": "Ben's Bites",
+      "published": "2026-05-14T13:31:03+00:00",
+      "summary": "all apps will become dev tools",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "d0fe5a015999"
+    },
+    {
+      "title": "MIT researchers teach AI models to interpret charts",
+      "url": "https://news.mit.edu/2026/mit-researchers-teach-ai-models-to-interpret-charts-0603",
+      "source": "MIT News - AI",
+      "published": "2026-06-03T04:00:00+00:00",
+      "summary": "The new ChartNet training dataset could improve the accuracy of vision-language models that help analyze business trends or interpret scientific figures.",
+      "author": "Adam Zewe | MIT News",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.6,
+      "url_hash": "e1575e91d609"
+    },
+    {
+      "title": "Building AI models that understand chemical principles",
+      "url": "https://news.mit.edu/2026/building-ai-models-with-chemical-principles-connor-coley-0520",
+      "source": "MIT News - AI",
+      "published": "2026-05-20T04:00:00+00:00",
+      "summary": "Connor Coley works at the interface of chemistry and machine learning, to discover and design new drug compounds.",
+      "author": "Anne Trafton | MIT News",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.58,
+      "url_hash": "523b341bdc54"
+    },
+    {
+      "title": "PATH to boost AI training and career opportunities for industry-aligned jobs",
+      "url": "https://news.mit.edu/2026/mit-raise-georgia-state-university-announce-path-0604",
+      "source": "MIT News - AI",
+      "published": "2026-06-04T19:50:00+00:00",
+      "summary": "MIT RAISE and Georgia State University announce an initiative to connect universities, community colleges, industry, and government to expand industry-aligned AI training and career pathways.",
+      "author": "Media Lab",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.56,
+      "url_hash": "d3cf52f5e39f"
+    },
+    {
+      "title": "NSF renews support for MIT-led AI and physics institute, expanding a new model for discovery",
+      "url": "https://news.mit.edu/2026/nsf-renews-support-mit-led-ai-and-physics-institute-0604",
+      "source": "MIT News - AI",
+      "published": "2026-06-04T16:00:00+00:00",
+      "summary": "IAIFI enters its second phase with increased funding, broader ambitions, and a growing community at the frontier of AI and fundamental physics.",
+      "author": "Laboratory for Nuclear Science",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.56,
+      "url_hash": "633a6392d44f"
+    }
+  ],
+  "chinese_items": [
+    {
+      "title": "“智能体最后的考试”，Fable 5竟然不敌GPT 5.5",
+      "url": "https://www.qbitai.com/2026/06/434774.html",
+      "source": "量子位",
+      "published": "2026-06-12T04:13:23+00:00",
+      "summary": "",
+      "author": "一水",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.89,
+      "url_hash": "8f108a40eeae"
+    },
+    {
+      "title": "Claude Fable 5省钱秘诀来了：调成Low档比Opus更便宜",
+      "url": "https://www.qbitai.com/2026/06/434571.html",
+      "source": "量子位",
+      "published": "2026-06-11T08:23:31+00:00",
+      "summary": "",
+      "author": "henry",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.88,
+      "url_hash": "ee717c42d5d2"
+    },
+    {
+      "title": "Anthropic老大的唯一 -1，就是AI股神的未婚妻",
+      "url": "https://www.qbitai.com/2026/06/433717.html",
+      "source": "量子位",
+      "published": "2026-06-12T07:29:59+00:00",
+      "summary": "",
+      "author": "闻乐",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.855,
+      "url_hash": "3c9552168b47"
+    },
+    {
+      "title": "氪星晚报｜SpaceX确定发行价，募资750亿美元创史上最大IPO；OpenAI CEO奥特曼推迟访韩计划；中央网信办举报中心开设“涉AI应用乱象举报专区”",
+      "url": "https://36kr.com/p/3849942472512769?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-12T13:15:02+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.841,
+      "url_hash": "89d869db9c7f"
+    },
+    {
+      "title": "特朗普政府禁止境外主体获取Anthropic旗下最强人工智能模型",
+      "url": "https://36kr.com/newsflashes/3850886715446274?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-13T01:17:22+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.841,
+      "url_hash": "ab48b944d78b"
+    },
+    {
+      "title": "美多州总检察长联合调查OpenAI",
+      "url": "https://36kr.com/newsflashes/3850885678306561?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-13T01:11:23+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.841,
+      "url_hash": "7faf879bd287"
+    },
+    {
+      "title": "氪星晚报｜百万Token只要几块钱，算力价格还在往下降；OpenAI正考虑大幅下调产品价格；今起儿童旅客可购买铁路旅游计次票，票价为成人旅客的5折",
+      "url": "https://36kr.com/p/3848516305605892?f=rss",
+      "source": "36氪 AI频道",
+      "published": "2026-06-11T11:00:00+00:00",
+      "summary": "",
+      "author": "",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.836,
+      "url_hash": "4c278003fc3d"
+    },
+    {
+      "title": "1290万高考生看过来！阿里出了个志愿填报Agent，免费的",
+      "url": "https://www.qbitai.com/2026/06/434558.html",
+      "source": "量子位",
+      "published": "2026-06-11T07:25:55+00:00",
+      "summary": "",
+      "author": "衡宇",
+      "tags": [
+        "daily",
+        "zh"
+      ],
+      "score": 0.81,
+      "url_hash": "beaac21152a1"
+    }
+  ],
+  "english_items": [
+    {
+      "title": "Why “reprogramming” is the buzziest approach to reversing aging right now",
+      "url": "https://www.technologyreview.com/2026/06/12/1138829/reprogramming-buzziest-approach-reversing-aging-right-now/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-12T09:00:00+00:00",
+      "summary": "Earlier this week, Life Biosciences, a biotech company focused on reversing age-related diseases, announced that it had dosed its first volunteer. A person with glaucoma has had an experimental treatment injected straight into their eyeball. The idea is to try to treat the disease—which can cause vision loss—by regenerating healthy nerves in the eye. But&#8230;",
+      "author": "Jessica Hamzelou",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.901,
+      "url_hash": "3553f6a4a210"
+    },
+    {
+      "title": "Google DeepMind is worried about what happens when millions of agents start to interact",
+      "url": "https://www.technologyreview.com/2026/06/11/1138794/google-deepmind-is-worried-about-what-happens-when-millions-of-agents-start-to-interact/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-11T11:00:45+00:00",
+      "summary": "Google DeepMind is funding research into the potential dangers of situations where millions of different AI agents interact with each other online. According to Rohin Shah, who directs the company’s AGI safety and alignment research, the mass-market arrival of agents that can carry out tasks without human oversight and follow instructions given to them by other&#8230;",
+      "author": "Will Douglas Heaven",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.886,
+      "url_hash": "5fa3405179d5"
+    },
+    {
+      "title": "Show HN: AccInt – a Work Model for AI coding agents",
+      "url": "https://accint.xyz/",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-13T01:25:10+00:00",
+      "summary": "",
+      "author": "maxbaluev",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.885,
+      "url_hash": "937bee94d6c6"
+    },
+    {
+      "title": "Trump admin blocks foreign access to Anthropic's most powerful AI models",
+      "url": "https://www.axios.com/2026/06/12/anthropic-trump-mythos-fable-national-security",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T23:52:27+00:00",
+      "summary": "",
+      "author": "some-guy",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.885,
+      "url_hash": "ee3a2b90ff67"
+    },
+    {
+      "title": "SentinelMCP – An open-source firewall for AI agents that use MCP",
+      "url": "https://github.com/technosiveuk-ui/SentinelMCP",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-13T01:51:11+00:00",
+      "summary": "",
+      "author": "technsoive",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.88,
+      "url_hash": "30be5f4a61fd"
+    },
+    {
+      "title": "We've suspended access to Claude Mythos 5 and Claude Fable 5",
+      "url": "https://status.claude.com/incidents/s9w82lp9dcn9",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-13T00:58:06+00:00",
+      "summary": "",
+      "author": "jesse_dot_id",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.88,
+      "url_hash": "5caf59a41944"
+    },
+    {
+      "title": "The Download: “reprogramming” aging, and the hidden sense of interoception",
+      "url": "https://www.technologyreview.com/2026/06/12/1138899/the-download-reprogramming-reverse-aging-interoception/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-12T12:10:00+00:00",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. Why “reprogramming” is the buzziest approach to reversing aging right now Earlier this week, Life Biosciences, a biotech company focused on reversing age-related diseases, announced that it had dosed its first&#8230;",
+      "author": "Thomas Macaulay",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.861,
+      "url_hash": "2ad84e39a253"
+    },
+    {
+      "title": "New Claude model - Fable",
+      "url": "https://www.bensbites.com/p/new-claude-model-fable",
+      "source": "Ben's Bites",
+      "published": "2026-06-11T13:03:20+00:00",
+      "summary": "everyone's building with it.",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "c5b2319b074f"
+    },
+    {
+      "title": "Ask HN: What will be the next big memory management system for AI Agents?",
+      "url": "https://news.ycombinator.com/item?id=48510721",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T23:44:47+00:00",
+      "summary": "",
+      "author": "AlanAAG",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "1f65b0586d44"
+    },
+    {
+      "title": "Ask HN: How are you designing human review for production AI agents?",
+      "url": "https://news.ycombinator.com/item?id=48510369",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T22:58:31+00:00",
+      "summary": "",
+      "author": "willXare",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "55f4c9dfbda8"
+    },
+    {
+      "title": "I created an AI agent that finds investors that and does reachouts to investors",
+      "url": "https://news.ycombinator.com/item?id=48509761",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T21:42:22+00:00",
+      "summary": "",
+      "author": "west_subject",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.845,
+      "url_hash": "6b9956ea30bc"
+    },
+    {
+      "title": "The Download: soccer’s data renaissance and China’s big nuclear plans",
+      "url": "https://www.technologyreview.com/2026/06/11/1138809/the-download-soccer-football-data-analytics-china-nuclear-power/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-11T12:10:00+00:00",
+      "summary": "This is today&#8217;s edition of The Download, our weekday newsletter that provides a daily dose of what&#8217;s going on in the world of technology. Inside soccer’s data renaissance Imagine tuning in to the opening kickoff of a World Cup match and seeing a player intentionally kick the ball out of bounds. You may question the&#8230;",
+      "author": "Thomas Macaulay",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.816,
+      "url_hash": "2e52d71156ea"
+    },
+    {
+      "title": "Inside soccer’s data renaissance",
+      "url": "https://www.technologyreview.com/2026/06/11/1138506/inside-soccer-data-renaissance-jesse-davis/",
+      "source": "MIT Technology Review AI",
+      "published": "2026-06-11T10:00:00+00:00",
+      "summary": "Imagine tuning in to the opening kickoff of a World Cup match and seeing a player intentionally send the ball all the way down the pitch and right out of bounds on the opponent’s end. Casual fans might scratch their heads. Where’s the logic in surrendering possession seconds into a game? If you were Jesse&#8230;",
+      "author": "Andrew Zaleski",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.816,
+      "url_hash": "d64a6f7de63c"
+    },
+    {
+      "title": "Erdős Problems and Speculations about the Power of AI Models",
+      "url": "https://www.youtube.com/watch?v=KbNctTQnVHI",
+      "source": "Hacker News (AI filtered)",
+      "published": "2026-06-12T23:14:19+00:00",
+      "summary": "",
+      "author": "maayank",
+      "tags": [
+        "realtime",
+        "en"
+      ],
+      "score": 0.75,
+      "url_hash": "5a4ecb06ce91"
+    },
+    {
+      "title": "Teaching AI agents to ask better questions by playing “Battleship”",
+      "url": "https://news.mit.edu/2026/teaching-ai-agents-ask-better-questions-playing-battleship-0603",
+      "source": "MIT News - AI",
+      "published": "2026-06-03T21:00:00+00:00",
+      "summary": "MIT researchers use the classic game as a test bed for AI agents, finding a small AI model can outperform the biggest ones at 1 percent of the cost.",
+      "author": "Alex Shipps | MIT CSAIL",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.695,
+      "url_hash": "d6335a1caa1c"
+    },
+    {
+      "title": "Opus 4.8",
+      "url": "https://www.bensbites.com/p/opus-48",
+      "source": "Ben's Bites",
+      "published": "2026-06-02T13:29:05+00:00",
+      "summary": "NVIDIA and Microsoft birthed a new computer",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "c6d92f6106dd"
+    },
+    {
+      "title": "I signed up for another SaaS",
+      "url": "https://www.bensbites.com/p/i-signed-up-for-another-saas",
+      "source": "Ben's Bites",
+      "published": "2026-05-28T13:03:27+00:00",
+      "summary": "new software benchmark",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "96f6d8cbeac1"
+    },
+    {
+      "title": "Is SaaS dead?",
+      "url": "https://www.bensbites.com/p/is-saas-dead",
+      "source": "Ben's Bites",
+      "published": "2026-05-26T13:10:52+00:00",
+      "summary": "MCP comeback in works",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "4fb481f15470"
+    },
+    {
+      "title": "Google's take on openclaw",
+      "url": "https://www.bensbites.com/p/googles-take-on-openclaw",
+      "source": "Ben's Bites",
+      "published": "2026-05-21T13:03:23+00:00",
+      "summary": "it's Anthropic's time for the mandate of heaven",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "e16ad69717c6"
+    },
+    {
+      "title": "Can I get my agents on the phone?",
+      "url": "https://www.bensbites.com/p/can-i-get-my-agents-on-the-phone",
+      "source": "Ben's Bites",
+      "published": "2026-05-19T13:01:25+00:00",
+      "summary": "I haven&#8217;t used OpenClaw in weeks",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "01f652f2f97f"
+    },
+    {
+      "title": "Agents feedback tip",
+      "url": "https://www.bensbites.com/p/agents-feedback-tip",
+      "source": "Ben's Bites",
+      "published": "2026-05-14T13:31:03+00:00",
+      "summary": "all apps will become dev tools",
+      "author": "",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.645,
+      "url_hash": "d0fe5a015999"
+    },
+    {
+      "title": "MIT researchers teach AI models to interpret charts",
+      "url": "https://news.mit.edu/2026/mit-researchers-teach-ai-models-to-interpret-charts-0603",
+      "source": "MIT News - AI",
+      "published": "2026-06-03T04:00:00+00:00",
+      "summary": "The new ChartNet training dataset could improve the accuracy of vision-language models that help analyze business trends or interpret scientific figures.",
+      "author": "Adam Zewe | MIT News",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.6,
+      "url_hash": "e1575e91d609"
+    },
+    {
+      "title": "Building AI models that understand chemical principles",
+      "url": "https://news.mit.edu/2026/building-ai-models-with-chemical-principles-connor-coley-0520",
+      "source": "MIT News - AI",
+      "published": "2026-05-20T04:00:00+00:00",
+      "summary": "Connor Coley works at the interface of chemistry and machine learning, to discover and design new drug compounds.",
+      "author": "Anne Trafton | MIT News",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.58,
+      "url_hash": "523b341bdc54"
+    },
+    {
+      "title": "PATH to boost AI training and career opportunities for industry-aligned jobs",
+      "url": "https://news.mit.edu/2026/mit-raise-georgia-state-university-announce-path-0604",
+      "source": "MIT News - AI",
+      "published": "2026-06-04T19:50:00+00:00",
+      "summary": "MIT RAISE and Georgia State University announce an initiative to connect universities, community colleges, industry, and government to expand industry-aligned AI training and career pathways.",
+      "author": "Media Lab",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.56,
+      "url_hash": "d3cf52f5e39f"
+    },
+    {
+      "title": "NSF renews support for MIT-led AI and physics institute, expanding a new model for discovery",
+      "url": "https://news.mit.edu/2026/nsf-renews-support-mit-led-ai-and-physics-institute-0604",
+      "source": "MIT News - AI",
+      "published": "2026-06-04T16:00:00+00:00",
+      "summary": "IAIFI enters its second phase with increased funding, broader ambitions, and a growing community at the frontier of AI and fundamental physics.",
+      "author": "Laboratory for Nuclear Science",
+      "tags": [
+        "daily",
+        "en"
+      ],
+      "score": 0.56,
+      "url_hash": "633a6392d44f"
+    }
+  ],
+  "sources_meta": [
+    {
+      "name": "The Batch (DeepLearning.AI)",
+      "weight": 0.95,
+      "type": "weekly",
+      "language": "en"
+    },
+    {
+      "name": "TLDR AI",
+      "weight": 0.9,
+      "type": "daily",
+      "language": "en"
+    },
+    {
+      "name": "The Rundown AI",
+      "weight": 0.88,
+      "type": "daily",
+      "language": "en"
+    },
+    {
+      "name": "Ben's Bites",
+      "weight": 0.85,
+      "type": "daily",
+      "language": "en"
+    },
+    {
+      "name": "The Neuron",
+      "weight": 0.85,
+      "type": "daily",
+      "language": "en"
+    },
+    {
+      "name": "Import AI (Jack Clark)",
+      "weight": 0.92,
+      "type": "weekly",
+      "language": "en"
+    },
+    {
+      "name": "MIT News - AI",
+      "weight": 0.9,
+      "type": "daily",
+      "language": "en"
+    },
+    {
+      "name": "Hacker News (Best)",
+      "weight": 0.75,
+      "type": "realtime",
+      "language": "en"
+    },
+    {
+      "name": "Hacker News (AI filtered)",
+      "weight": 0.8,
+      "type": "realtime",
+      "language": "en"
+    },
+    {
+      "name": "MIT Technology Review AI",
+      "weight": 0.88,
+      "type": "daily",
+      "language": "en"
+    },
+    {
+      "name": "AI News (GitHub Topics)",
+      "weight": 0.7,
+      "type": "weekly",
+      "language": "en"
+    },
+    {
+      "name": "WaytoAGI 社区精选",
+      "weight": 0.75,
+      "type": "daily",
+      "language": "zh"
+    },
+    {
+      "name": "机器之心",
+      "weight": 0.85,
+      "type": "daily",
+      "language": "zh"
+    },
+    {
+      "name": "量子位",
+      "weight": 0.85,
+      "type": "daily",
+      "language": "zh"
+    },
+    {
+      "name": "36氪 AI频道",
+      "weight": 0.78,
+      "type": "daily",
+      "language": "zh"
+    }
+  ]
+}
