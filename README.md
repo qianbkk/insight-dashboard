@@ -48,7 +48,7 @@ pip install -r requirements.txt
 
 # Run
 python backend/app.py
-# → http://127.0.0.1:5173
+# → http://127.0.0.1:8741   (override with INSIGHT_PORT env var)
 ```
 
 ## API

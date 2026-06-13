@@ -315,4 +315,5 @@ if __name__ == '__main__':
     print(f"Frontend dir: {FRONTEND_DIR}")
     print(f"Data dir:     {DATA_DIR}")
     print(f"History dir:  {HISTORY_DIR}")
-    app.run(host='127.0.0.1', port=5173, debug=False, threaded=True)
+    port = int(os.environ.get('INSIGHT_PORT', '8741'))
+    app.run(host='127.0.0.1', port=port, debug=False, threaded=True)
