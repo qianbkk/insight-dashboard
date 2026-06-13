@@ -284,6 +284,31 @@ def _title_similarity(a: str, b: str) -> float:
     return inter / union if union else 0.0
 
 
+def _cluster_items(items: List[NewsItem], threshold: float = 0.5) -> List[NewsItem]:
+    """跨源聚类：把标题+摘要相似的归到同一 cluster，并标注 cluster_size"""
+    clusters: List[List[NewsItem]] = []
+    for it in items:
+        text = f"{it.title} {it.summary}".lower()
+        placed = False
+        for cluster in clusters:
+            rep = cluster[0]
+            if _title_similarity(f"{rep.title} {rep.summary}", text) >= threshold:
+                cluster.append(it)
+                placed = True
+                break
+        if not placed:
+            clusters.append([it])
+    # 回写 cluster 信息
+    for ci, cluster in enumerate(clusters):
+        if len(cluster) < 2:
+            continue  # 单条不标 cluster
+        sources = list({c.source for c in cluster})
+        for c in cluster:
+            c.tags = list(c.tags) + [f'cluster:{ci}', f'cluster_size:{len(cluster)}']
+            c.score = round(min(1.0, c.score + 0.05 * (len(cluster) - 1)), 4)
+    return items
+
+
 class AIDailyFetcher:
     """AI日报抓取器"""
 
@@ -385,6 +410,9 @@ class AIDailyFetcher:
                 continue
             seen_hashes.add(item.url_hash)
             deduped.append(item)
+
+        # 3) 跨源聚类：相似标题归一类，并加分
+        deduped = _cluster_items(deduped)
 
         return deduped
 
