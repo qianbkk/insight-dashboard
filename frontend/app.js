@@ -249,50 +249,35 @@ function startClock() {
   setInterval(tick, 1000);
 }
 
-// Map tool kind → backend kind id used in snapshot folders
-const KIND_MAP = {
-  pulse:    'ai_daily',
-  velocity: 'github',
-  lab:      'arxiv',
-  weights:  'hf',
-  digest:   'digest',
-};
-// Reverse for the display when reading from snapshot
-const KIND_DISPLAY = {
-  ai_daily: 'pulse',
-  github:   'velocity',
-  arxiv:    'lab',
-  hf:       'weights',
-  digest:   'digest',
-};
+// Backend uses the same tool kind ids as the frontend (pulse, velocity, lab,
+// weights, digest) — no mapping required.
 
 async function loadPulse() {
   if (state.pulse.viewingSnapshot) return true;
-  const r = await api('/api/ai-daily/data');
+  const r = await api('/api/pulse/data');
   if (r.ok) { state.pulse.data = r.data; return true; }
   return false;
 }
 async function loadVelocity() {
   if (state.velocity.viewingSnapshot) return true;
-  const r = await api('/api/github/data');
+  const r = await api('/api/velocity/data');
   if (r.ok) { state.velocity.data = r.data; return true; }
   return false;
 }
 async function loadLab() {
   if (state.lab.viewingSnapshot) return true;
-  const r = await api('/api/arxiv/data');
+  const r = await api('/api/lab/data');
   if (r.ok) { state.lab.data = r.data; return true; }
   return false;
 }
 async function loadWeights() {
   if (state.weights.viewingSnapshot) return true;
-  const r = await api('/api/hf/data');
+  const r = await api('/api/weights/data');
   if (r.ok) { state.weights.data = r.data; return true; }
   return false;
 }
 async function loadHistoryForKind(kind) {
-  const id = KIND_MAP[kind] || kind;
-  const r = await api(`/api/history?kind=${id}`);
+  const r = await api(`/api/history?kind=${kind}`);
   if (r.ok) {
     const data = r.data || {};
     state.history.snapshots = data.snapshots || [];
@@ -455,13 +440,13 @@ function toolCardPlaceholder(kind, num, desc) {
     </a>`;
 }
 async function runTool(route) {
-  const apiMap = {
-    '#/pulse':    '/api/ai-daily',
-    '#/velocity': '/api/github',
-    '#/lab':      '/api/arxiv',
-    '#/weights':  '/api/hf',
+  const routeToEndpoint = {
+    '#/pulse':    '/api/pulse',
+    '#/velocity': '/api/velocity',
+    '#/lab':      '/api/lab',
+    '#/weights':  '/api/weights',
   };
-  const ep = apiMap[route];
+  const ep = routeToEndpoint[route];
   if (!ep) { navigate(route); return; }
   setStatus('busy', t('status.busy'));
   setProgress(true, t('status.busy'));
@@ -885,13 +870,11 @@ async function openHistoryModal(kind) {
       const k = btn.dataset.kind, ts = btn.dataset.ts;
       const r = await api(`/api/history/${k}/${ts}`);
       if (r.ok) {
-        const kindKey = KIND_DISPLAY[k] || k;
-        const st = state[kindKey];
+        const st = state[k];
         if (st) {
           st.viewingSnapshot = r.data;
           modal.remove();
-          // navigate to the right hash; if already on the page, re-render
-          const targetHash = '#/' + kindKey;
+          const targetHash = '#/' + k;
           if (location.hash === targetHash) {
             route();
           } else {

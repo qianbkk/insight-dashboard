@@ -1,32 +1,36 @@
 """
 Insight Dashboard - Flask API
+=============================
 
 Endpoints
-- POST /api/ai-daily           trigger AI Pulse ingest
-- GET  /api/ai-daily/data      latest AI Pulse JSON
-- POST /api/github             trigger Code Velocity ingest
-- GET  /api/github/data        latest GitHub JSON (with star history)
-- POST /api/arxiv              trigger arXiv ingest
-- GET  /api/arxiv/data         latest arXiv JSON
-- POST /api/hf                 trigger HuggingFace ingest
-- GET  /api/hf/data            latest HuggingFace JSON
-- POST /api/digest/generate    generate today's Markdown digest
-- GET  /api/digest/latest      get most recent digest
-- GET  /api/history            list all snapshots (with ?kind= filter)
-- GET  /api/history/<k>/<ts>   get specific snapshot
-- GET  /api/i18n/<lang>        i18n strings (en, zh-CN)
-- GET  /api/status             task state + data file existence
-- GET  /                       SPA shell (frontend)
-- GET  /<path>                 static assets
+=========
+POST /api/<tool>             Trigger an ingest (async, tool = pulse|velocity|lab|weights|digest)
+GET  /api/<tool>/data        Latest cache for a tool
+GET  /api/digest/latest      Most recent digest markdown
+GET  /api/history            List all snapshots (?kind=<tool> filter)
+GET  /api/history/<k>/<ts>   Get a specific snapshot
+GET  /api/i18n/<lang>        i18n strings (en, zh-CN)
+GET  /api/status             Current state of all tools
+GET  /api/registry           Tool manifest (metadata for the SPA)
+GET  /                       SPA shell
+GET  /<path>                 static assets
+
+Response envelope
+=================
+Every JSON response is {ok: bool, data?: any, error?: {code, message}}.
 """
 
 import os
 import json
-import threading
 import logging
+import threading
 from datetime import datetime
+
 from flask import Flask, jsonify, request, send_from_directory, abort
 from flask_cors import CORS
+
+import registry
+from responses import ok, err, conflict, not_found
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'data'))
@@ -46,191 +50,123 @@ log = logging.getLogger('insight.api')
 app = Flask(__name__, static_folder=None)
 CORS(app)
 
-# ---- task state ----
-TASK_STATE = {
-    'ai_daily': {'status': 'idle', 'started_at': None, 'finished_at': None, 'error': None},
-    'github':   {'status': 'idle', 'started_at': None, 'finished_at': None, 'error': None},
-    'arxiv':    {'status': 'idle', 'started_at': None, 'finished_at': None, 'error': None},
-    'hf':       {'status': 'idle', 'started_at': None, 'finished_at': None, 'error': None},
-    'digest':   {'status': 'idle', 'started_at': None, 'finished_at': None, 'error': None},
-}
-STATE_LOCK = threading.Lock()
+
+# ---- request id (lightweight) ----
+@app.before_request
+def _attach_request_id():
+    import uuid
+    request.environ['req_id'] = uuid.uuid4().hex[:8]
 
 
-def _now_iso() -> str:
-    return datetime.utcnow().isoformat() + 'Z'
+@app.after_request
+def _log_request(response):
+    log.info(f"{request.environ.get('req_id','-')} {request.method} {request.path} -> {response.status_code}")
+    return response
 
 
-def _set_state(key: str, **kwargs) -> None:
-    with STATE_LOCK:
-        TASK_STATE[key].update(kwargs)
+# ---- 404 + 500 envelopes ----
+@app.errorhandler(404)
+def _not_found(_e):
+    return err('not found', code='not_found', status=404)
+
+@app.errorhandler(405)
+def _method_not_allowed(_e):
+    return err('method not allowed', code='method_not_allowed', status=405)
+
+@app.errorhandler(500)
+def _server_error(e):
+    log.exception(e)
+    return err('internal server error', code='internal', status=500)
 
 
-def _save_snapshot(kind: str, payload: dict) -> None:
-    """Persist a snapshot to history dir (best effort, never blocks)"""
-    try:
-        from history_store import save_snapshot
-        path = save_snapshot(DATA_DIR, kind, payload)
-        log.info(f"snapshot saved: {kind} -> {os.path.basename(os.path.dirname(path))}/{os.path.basename(path)}")
-    except Exception as e:
-        log.warning(f"snapshot save failed: {e}")
+# ---- API: tool manifest ----
+@app.route('/api/registry', methods=['GET'])
+def api_registry():
+    """Tool manifest: which tools exist, with endpoints and meta."""
+    tools = []
+    for k, v in registry.TOOLS.items():
+        tools.append({
+            'id': k,
+            'name': v['name'],
+            'category': v['category'],
+            'fetch_endpoint': '/api/' + v['fetch_endpoint'],
+            'latest_endpoint': '/api/' + v['latest_endpoint'],
+        })
+    return ok({'tools': tools})
 
 
-# ---- fetcher wrappers ----
-def _run_ai_daily():
-    from ai_daily import fetch_and_save
-    _set_state('ai_daily', status='running', started_at=_now_iso(), finished_at=None, error=None)
-    try:
-        report = fetch_and_save(os.path.join(DATA_DIR, 'ai_daily_latest.json'), top_n=60)
-        _save_snapshot('ai_daily', report)
-        _set_state('ai_daily', status='success', finished_at=_now_iso(), error=None)
-    except Exception as e:
-        log.exception("ai_daily failed")
-        _set_state('ai_daily', status='error', finished_at=_now_iso(), error=str(e))
+# ---- API: triggers ----
+def _trigger(tool: str, **kwargs):
+    from tasks import get_state, run
+    st = get_state().get(tool, {})
+    if st.get('status') == 'running':
+        return conflict('already running')
+    # Detached background thread
+    threading.Thread(
+        target=run,
+        args=(tool, DATA_DIR),
+        kwargs={'extra_kwargs': kwargs},
+        daemon=True,
+    ).start()
+    return ok({'tool': tool, 'state': get_state()[tool]})
 
 
-def _run_github():
-    from github_trending import fetch_and_save
-    from github_history import update_history
-    out = os.path.join(DATA_DIR, 'github_trending_latest.json')
-    _set_state('github', status='running', started_at=_now_iso(), finished_at=None, error=None)
-    try:
-        report = fetch_and_save(out)
-        try:
-            update_history(report, GITHUB_HISTORY_DIR)
-            report = _attach_history(report, GITHUB_HISTORY_DIR)
-            with open(out, 'w', encoding='utf-8') as f:
-                json.dump(report, f, ensure_ascii=False, indent=2)
-        except Exception as e:
-            log.warning(f"github history attach failed: {e}")
-        _save_snapshot('github', report)
-        _set_state('github', status='success', finished_at=_now_iso(), error=None)
-    except Exception as e:
-        log.exception("github failed")
-        _set_state('github', status='error', finished_at=_now_iso(), error=str(e))
+@app.route('/api/pulse', methods=['POST'])
+def api_pulse(): return _trigger('pulse')
 
+@app.route('/api/velocity', methods=['POST'])
+def api_velocity(): return _trigger('velocity')
 
-def _attach_history(report: dict, history_dir: str) -> dict:
-    """从历史文件读取每个repo最近N个star总数, 注入到composite_top和sections的repo项里"""
-    def load(full_name: str):
-        path = os.path.join(history_dir, f"{full_name.replace('/', '__')}.jsonl")
-        if not os.path.exists(path):
-            return []
-        pts = []
-        try:
-            with open(path, 'r', encoding='utf-8') as f:
-                for line in f:
-                    line = line.strip()
-                    if not line: continue
-                    pts.append(json.loads(line))
-        except Exception:
-            return []
-        return pts
+@app.route('/api/lab', methods=['POST'])
+def api_lab(): return _trigger('lab')
 
-    def attach(items):
-        for r in (items or []):
-            fn = r.get('full_name', '')
-            hist = load(fn)
-            if hist:
-                r['star_history'] = [h.get('stars', 0) for h in hist[-14:]]
-        return items
+@app.route('/api/weights', methods=['POST'])
+def api_weights(): return _trigger('weights')
 
-    if 'composite_top' in report:
-        report['composite_top'] = attach(report['composite_top'])
-    for sec, data in report.get('sections', {}).items():
-        data['repos'] = attach(data.get('repos', []))
-    return report
-
-
-def _run_arxiv():
-    from arxiv_fetcher import fetch_and_save
-    _set_state('arxiv', status='running', started_at=_now_iso(), finished_at=None, error=None)
-    try:
-        report = fetch_and_save(os.path.join(DATA_DIR, 'arxiv_latest.json'), max_results=40)
-        _save_snapshot('arxiv', report)
-        _set_state('arxiv', status='success', finished_at=_now_iso(), error=None)
-    except Exception as e:
-        log.exception("arxiv failed")
-        _set_state('arxiv', status='error', finished_at=_now_iso(), error=str(e))
-
-
-def _run_hf():
-    from hf_fetcher import fetch_and_save
-    _set_state('hf', status='running', started_at=_now_iso(), finished_at=None, error=None)
-    try:
-        report = fetch_and_save(os.path.join(DATA_DIR, 'hf_latest.json'))
-        _save_snapshot('hf', report)
-        _set_state('hf', status='success', finished_at=_now_iso(), error=None)
-    except Exception as e:
-        log.exception("hf failed")
-        _set_state('hf', status='error', finished_at=_now_iso(), error=str(e))
-
-
-def _run_digest():
-    from digest import generate_digest
-    _set_state('digest', status='running', started_at=_now_iso(), finished_at=None, error=None)
-    try:
-        today = datetime.utcnow().strftime('%Y-%m-%d')
-        out = os.path.join(DIGEST_DIR, f"{today}.md")
-        generate_digest(DATA_DIR, out)
-        _set_state('digest', status='success', finished_at=_now_iso(), error=None)
-    except Exception as e:
-        log.exception("digest failed")
-        _set_state('digest', status='error', finished_at=_now_iso(), error=str(e))
-
-
-# ---- API: ingest triggers ----
-def _trigger(key: str, fn):
-    if TASK_STATE[key]['status'] == 'running':
-        return jsonify({'ok': False, 'message': '已在抓取中', 'state': TASK_STATE[key]}), 409
-    threading.Thread(target=fn, daemon=True).start()
-    return jsonify({'ok': True, 'message': '已开始', 'state': TASK_STATE[key]})
-
-
-@app.route('/api/ai-daily', methods=['POST'])
-def api_ai_daily(): return _trigger('ai_daily', _run_ai_daily)
-@app.route('/api/github', methods=['POST'])
-def api_github(): return _trigger('github', _run_github)
-@app.route('/api/arxiv', methods=['POST'])
-def api_arxiv(): return _trigger('arxiv', _run_arxiv)
-@app.route('/api/hf', methods=['POST'])
-def api_hf(): return _trigger('hf', _run_hf)
 @app.route('/api/digest/generate', methods=['POST'])
-def api_digest_generate(): return _trigger('digest', _run_digest)
+def api_digest_generate(): return _trigger('digest')
 
 
 # ---- API: latest data ----
-def _serve_data(filename: str, key: str):
-    path = os.path.join(DATA_DIR, filename)
+def _serve_latest(tool: str):
+    from tasks import get_state
+    cfg = registry.get_tool(tool)
+    cache_file = cfg['cache_file']
+    if '{date}' in cache_file:
+        cache_file = cache_file.format(date=datetime.utcnow().strftime('%Y-%m-%d'))
+    path = os.path.join(DATA_DIR, cache_file)
     if not os.path.exists(path):
-        return jsonify({'ok': False, 'message': 'no data', 'state': TASK_STATE[key]}), 404
+        return not_found('no data yet')
     with open(path, 'r', encoding='utf-8') as f:
         data = json.load(f)
-    return jsonify({'ok': True, 'state': TASK_STATE[key], 'data': data})
+    return ok(data=data, state=get_state()[tool])
 
 
-@app.route('/api/ai-daily/data', methods=['GET'])
-def api_ai_daily_data(): return _serve_data('ai_daily_latest.json', 'ai_daily')
-@app.route('/api/github/data', methods=['GET'])
-def api_github_data(): return _serve_data('github_trending_latest.json', 'github')
-@app.route('/api/arxiv/data', methods=['GET'])
-def api_arxiv_data(): return _serve_data('arxiv_latest.json', 'arxiv')
-@app.route('/api/hf/data', methods=['GET'])
-def api_hf_data(): return _serve_data('hf_latest.json', 'hf')
+@app.route('/api/pulse/data', methods=['GET'])
+def api_pulse_data(): return _serve_latest('pulse')
+
+@app.route('/api/velocity/data', methods=['GET'])
+def api_velocity_data(): return _serve_latest('velocity')
+
+@app.route('/api/lab/data', methods=['GET'])
+def api_lab_data(): return _serve_latest('lab')
+
+@app.route('/api/weights/data', methods=['GET'])
+def api_weights_data(): return _serve_latest('weights')
 
 
 # ---- API: digest ----
 @app.route('/api/digest/latest', methods=['GET'])
 def api_digest_latest():
     if not os.path.exists(DIGEST_DIR):
-        return jsonify({'ok': False, 'message': '尚无 digest'}), 404
+        return not_found('no digests')
     files = sorted([f for f in os.listdir(DIGEST_DIR) if f.endswith('.md')])
     if not files:
-        return jsonify({'ok': False, 'message': '尚无 digest'}), 404
+        return not_found('no digests yet')
     latest = files[-1]
     with open(os.path.join(DIGEST_DIR, latest), 'r', encoding='utf-8') as f:
         content = f.read()
-    return jsonify({'ok': True, 'date': latest.replace('.md', ''), 'content': content})
+    return ok({'date': latest.replace('.md', ''), 'content': content})
 
 
 # ---- API: history ----
@@ -241,8 +177,8 @@ def api_history_list():
     snaps = list_snapshots(DATA_DIR, kind=kind)
     for s in snaps:
         try:
-            full_path = os.path.join(HISTORY_DIR, s['kind'], f"{s['ts']}.json")
-            with open(full_path, 'r', encoding='utf-8') as f:
+            snap_path = os.path.join(HISTORY_DIR, s['kind'], f"{s['ts']}.json")
+            with open(snap_path, 'r', encoding='utf-8') as f:
                 payload = json.load(f)
             for k in ('top_items', 'papers', 'models', 'composite_top'):
                 if k in payload and isinstance(payload[k], list):
@@ -252,13 +188,7 @@ def api_history_list():
                 s['items'] = 0
         except Exception:
             s['items'] = 0
-    return jsonify({
-        'ok': True,
-        'data': {
-            'kinds': list_kinds(DATA_DIR),
-            'snapshots': snaps,
-        },
-    })
+    return ok({'kinds': list_kinds(DATA_DIR), 'snapshots': snaps})
 
 
 @app.route('/api/history/<kind>/<ts>', methods=['GET'])
@@ -266,36 +196,31 @@ def api_history_get(kind: str, ts: str):
     from history_store import get_snapshot
     snap = get_snapshot(DATA_DIR, kind, ts)
     if snap is None:
-        return jsonify({'ok': False, 'error': 'not found'}), 404
-    return jsonify({'ok': True, 'data': snap})
+        return not_found('snapshot not found')
+    return ok(snap)
 
 
 # ---- API: i18n ----
 @app.route('/api/i18n/<lang>', methods=['GET'])
 def api_i18n(lang: str):
     from i18n_strings import get
-    return jsonify({'ok': True, 'lang': lang, 'strings': get(lang)})
+    return ok({'lang': lang, 'strings': get(lang)})
 
 
 # ---- API: status ----
 @app.route('/api/status', methods=['GET'])
 def api_status():
-    return jsonify({
-        'ok': True,
-        'state': TASK_STATE,
-        'data': {
-            'files': {
-                'ai_daily': os.path.exists(os.path.join(DATA_DIR, 'ai_daily_latest.json')),
-                'github': os.path.exists(os.path.join(DATA_DIR, 'github_trending_latest.json')),
-                'arxiv': os.path.exists(os.path.join(DATA_DIR, 'arxiv_latest.json')),
-                'hf': os.path.exists(os.path.join(DATA_DIR, 'hf_latest.json')),
-            },
-        },
-        'now': _now_iso(),
-    })
+    from tasks import get_state
+    files = {
+        k: os.path.exists(os.path.join(DATA_DIR, registry.TOOLS[k]['cache_file'].format(
+            date=datetime.utcnow().strftime('%Y-%m-%d')) if '{date}' in registry.TOOLS[k]['cache_file']
+            else registry.TOOLS[k]['cache_file']))
+        for k in registry.TOOLS
+    }
+    return ok({'state': get_state(), 'files': files})
 
 
-# ---- 静态前端 (SPA shell + assets) ----
+# ---- static + SPA shell ----
 @app.route('/')
 def index():
     return send_from_directory(FRONTEND_DIR, 'index.html')
@@ -311,9 +236,39 @@ def static_files(path: str):
     return send_from_directory(FRONTEND_DIR, path)
 
 
+# ===========================================================================
+# Backward-compat aliases — older API paths
+# ===========================================================================
+@app.route('/api/ai-daily', methods=['POST'])
+def api_ai_daily_alias(): return _trigger('pulse')
+
+@app.route('/api/ai-daily/data', methods=['GET'])
+def api_ai_daily_data_alias(): return _serve_latest('pulse')
+
+@app.route('/api/github', methods=['POST'])
+def api_github_alias(): return _trigger('velocity')
+
+@app.route('/api/github/data', methods=['GET'])
+def api_github_data_alias(): return _serve_latest('velocity')
+
+@app.route('/api/arxiv', methods=['POST'])
+def api_arxiv_alias(): return _trigger('lab')
+
+@app.route('/api/arxiv/data', methods=['GET'])
+def api_arxiv_data_alias(): return _serve_latest('lab')
+
+@app.route('/api/hf', methods=['POST'])
+def api_hf_alias(): return _trigger('weights')
+
+@app.route('/api/hf/data', methods=['GET'])
+def api_hf_data_alias(): return _serve_latest('weights')
+
+
 if __name__ == '__main__':
     print(f"Frontend dir: {FRONTEND_DIR}")
     print(f"Data dir:     {DATA_DIR}")
     print(f"History dir:  {HISTORY_DIR}")
+    print(f"Tools:        {list(registry.TOOLS.keys())}")
     port = int(os.environ.get('INSIGHT_PORT', '8741'))
+    print(f"Listening on: http://127.0.0.1:{port}")
     app.run(host='127.0.0.1', port=port, debug=False, threaded=True)
