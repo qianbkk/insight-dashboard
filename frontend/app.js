@@ -6,8 +6,8 @@ const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const state = {
   ai:  { data: null, tab: 'all',     query: '', bookmarks: new Set() },
   gh:  { data: null, tab: 'composite', query: '', bookmarks: new Set() },
-  arx: { data: null, tab: 'papers',  query: '' },
-  hf:  { data: null, tab: 'models',  query: '' },
+  arx: { data: null, tab: 'papers',  query: '', bookmarks: new Set() },
+  hf:  { data: null, tab: 'models',  query: '', bookmarks: new Set() },
 };
 
 // -------- bookmarks (localStorage) --------
@@ -15,52 +15,47 @@ const BK_KEY = 'insight_bookmarks_v1';
 const loadBookmarks = () => {
   try {
     const raw = localStorage.getItem(BK_KEY);
-    if (!raw) return {};
+    if (!raw) return { news: new Set(), github: new Set(), papers: new Set() };
     const obj = JSON.parse(raw);
-    // group by category
-    const out = { news: new Set(), github: new Set(), papers: new Set() };
-    for (const k of Object.keys(out)) out[k] = new Set(obj[k] || []);
-    return out;
-  } catch { return { news: new Set(), github: new Set(), papers: new Set() }; }
-};
-const saveBookmarks = () => {
-  const out = {};
-  for (const k of Object.keys(state.ai.bookmarks || {}).concat(Object.keys(state.gh.bookmarks || {}))) {
-    out[k] = Array.from((state.ai.bookmarks?.[k] || state.gh.bookmarks?.[k] || new Set()));
+    return {
+      news: new Set(obj.news || []),
+      github: new Set(obj.github || []),
+      papers: new Set(obj.papers || []),
+    };
+  } catch {
+    return { news: new Set(), github: new Set(), papers: new Set() };
   }
-  try { localStorage.setItem(BK_KEY, JSON.stringify(out)); } catch {}
 };
 const allBookmarks = loadBookmarks();
 state.ai.bookmarks = allBookmarks.news;
 state.gh.bookmarks = allBookmarks.github;
-state.arx = state.arx || {};
 state.arx.bookmarks = allBookmarks.papers;
-state.arx.tab = 'papers';
-state.arx.query = '';
-state.hf = state.hf || {};
-state.hf.tab = 'models';
-state.hf.query = '';
+state.hf.bookmarks = new Set();
 
 function isBookmarked(kind, id) {
-  if (kind === 'news') return state.ai.bookmarks.has(id);
-  if (kind === 'github') return state.gh.bookmarks.has(id);
-  if (kind === 'paper') return state.arx.bookmarks?.has(id);
-  return false;
+  const map = kind === 'news' ? state.ai.bookmarks
+    : kind === 'github' ? state.gh.bookmarks
+    : kind === 'paper' ? state.arx.bookmarks
+    : state.hf.bookmarks;
+  return map ? map.has(id) : false;
 }
 function toggleBookmark(kind, id) {
   const map = kind === 'news' ? state.ai.bookmarks
     : kind === 'github' ? state.gh.bookmarks
-    : (state.arx.bookmarks ||= new Set());
+    : kind === 'paper' ? state.arx.bookmarks
+    : state.hf.bookmarks;
+  if (!map) return false;
   if (map.has(id)) { map.delete(id); return false; }
   map.add(id); return true;
 }
 function persistAll() {
-  const obj = {
-    news: Array.from(state.ai.bookmarks),
-    github: Array.from(state.gh.bookmarks),
-    papers: Array.from(state.arx.bookmarks || []),
-  };
-  try { localStorage.setItem(BK_KEY, JSON.stringify(obj)); } catch {}
+  try {
+    localStorage.setItem(BK_KEY, JSON.stringify({
+      news: Array.from(state.ai.bookmarks),
+      github: Array.from(state.gh.bookmarks),
+      papers: Array.from(state.arx.bookmarks),
+    }));
+  } catch {}
 }
 
 // -------- utils --------
@@ -355,18 +350,23 @@ function getGhItems() {
   return items;
 }
 function sparkline(points, w = 80, h = 22) {
-  // points: array of numbers; render as polyline with smooth area
-  if (!points || points.length < 2) return '';
+  if (!points || points.length === 0) return '';
+  const stroke = points.length >= 2 && points[points.length - 1] >= points[0]
+    ? 'var(--signal)' : (points.length >= 2 ? 'var(--bad)' : 'var(--txt-3)');
+  if (points.length === 1) {
+    // 单点显示为圆点
+    return `
+      <svg class="spark" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true">
+        <circle cx="${w/2}" cy="${h/2}" r="3" fill="${stroke}"/>
+        <text x="${w/2}" y="${h-2}" text-anchor="middle" font-size="6" fill="var(--txt-4)" font-family="var(--font-mono)">1pt</text>
+      </svg>`;
+  }
   const min = Math.min(...points);
   const max = Math.max(...points);
   const range = (max - min) || 1;
   const dx = w / (points.length - 1);
   const pts = points.map((v, i) => `${(i * dx).toFixed(1)},${(h - ((v - min) / range) * (h - 4) - 2).toFixed(1)}`);
   const areaPts = [`0,${h}`, ...pts, `${w},${h}`].join(' ');
-  const last = points[points.length - 1];
-  const first = points[0];
-  const delta = last - first;
-  const stroke = delta >= 0 ? 'var(--signal)' : 'var(--bad)';
   return `
     <svg class="spark" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true">
       <polygon points="${areaPts}" fill="${stroke}" fill-opacity="0.12"/>
@@ -521,7 +521,7 @@ function bindBookmarkBtns(root) {
 // -------- export bookmarks --------
 function exportBookmarks() {
   const all = [];
-  for (const [kind, set] of [['news', state.ai.bookmarks], ['github', state.gh.bookmarks], ['papers', state.arx.bookmarks || new Set()]]) {
+  for (const [kind, set] of [['news', state.ai.bookmarks], ['github', state.gh.bookmarks], ['papers', state.arx.bookmarks]]) {
     for (const id of set) {
       all.push({ kind, id, ts: new Date().toISOString() });
     }

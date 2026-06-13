@@ -106,7 +106,7 @@ def _attach_history(report: dict, history_dir: str) -> dict:
     """从历史文件读取每个repo最近N个star总数, 注入到composite_top和sections的repo项里"""
     import glob
     def load(full_name: str):
-        path = os.path.join(history_dir, f"{full_name.replace('/', '_')}.jsonl")
+        path = os.path.join(history_dir, f"{full_name.replace('/', '__')}.jsonl")
         if not os.path.exists(path):
             return []
         pts = []

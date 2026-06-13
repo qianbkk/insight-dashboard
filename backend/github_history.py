@@ -19,7 +19,11 @@ def _file_for(history_dir: str, full_name: str) -> str:
 
 
 def update_history(report: Dict, history_dir: str) -> None:
-    """从 report 中提取所有 repo 的 star 数，写入 jsonl"""
+    """从 report 中提取所有 repo 的 star 数，写入 jsonl
+
+    策略：每次 fetch 都 append 一个新点（同一天也 append），让 sparkline
+    能随时间积累展示趋势。最多保留 90 条。
+    """
     os.makedirs(history_dir, exist_ok=True)
     now = datetime.now(timezone.utc).isoformat()
     seen = set()
@@ -29,20 +33,28 @@ def update_history(report: Dict, history_dir: str) -> None:
             return
         seen.add(full_name)
         path = _file_for(history_dir, full_name)
-        # 当天已有记录就更新（而不是追加），避免一天多次同值
         existing = []
         if os.path.exists(path):
             with open(path, 'r', encoding='utf-8') as f:
                 existing = [json.loads(l) for l in f if l.strip()]
-        # 检查最后一条是否今天
+        # 如果 last 是同一分钟内（同一fetch周期内），覆盖
         last = existing[-1] if existing else None
-        if last and last.get('ts', '').startswith(now[:10]):
-            last['stars'] = stars
-            last['forks'] = forks
-            last['ts'] = now
-        else:
-            existing.append({'ts': now, 'stars': stars, 'forks': forks})
-        # 截断到最近 90 条
+        if last:
+            try:
+                from datetime import datetime as _dt
+                last_dt = _dt.fromisoformat(last['ts'].replace('Z', '+00:00'))
+                cur_dt = _dt.fromisoformat(now.replace('Z', '+00:00'))
+                if (cur_dt - last_dt).total_seconds() < 60:
+                    last['stars'] = stars
+                    last['forks'] = forks
+                    last['ts'] = now
+                    with open(path, 'w', encoding='utf-8') as f:
+                        for item in existing:
+                            f.write(json.dumps(item, ensure_ascii=False) + '\n')
+                    return
+            except Exception:
+                pass
+        existing.append({'ts': now, 'stars': stars, 'forks': forks})
         existing = existing[-90:]
         with open(path, 'w', encoding='utf-8') as f:
             for item in existing:
