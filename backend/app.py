@@ -203,7 +203,7 @@ def api_digest_generate(): return _trigger('digest', _run_digest)
 def _serve_data(filename: str, key: str):
     path = os.path.join(DATA_DIR, filename)
     if not os.path.exists(path):
-        return jsonify({'ok': False, 'message': '尚无数据', 'state': TASK_STATE[key]}), 404
+        return jsonify({'ok': False, 'message': 'no data', 'state': TASK_STATE[key]}), 404
     with open(path, 'r', encoding='utf-8') as f:
         data = json.load(f)
     return jsonify({'ok': True, 'state': TASK_STATE[key], 'data': data})
@@ -239,7 +239,6 @@ def api_history_list():
     from history_store import list_snapshots, list_kinds
     kind = request.args.get('kind')
     snaps = list_snapshots(DATA_DIR, kind=kind)
-    # 补上每条的 item count
     for s in snaps:
         try:
             full_path = os.path.join(HISTORY_DIR, s['kind'], f"{s['ts']}.json")
@@ -255,8 +254,10 @@ def api_history_list():
             s['items'] = 0
     return jsonify({
         'ok': True,
-        'kinds': list_kinds(DATA_DIR),
-        'snapshots': snaps,
+        'data': {
+            'kinds': list_kinds(DATA_DIR),
+            'snapshots': snaps,
+        },
     })
 
 
@@ -265,7 +266,7 @@ def api_history_get(kind: str, ts: str):
     from history_store import get_snapshot
     snap = get_snapshot(DATA_DIR, kind, ts)
     if snap is None:
-        return jsonify({'ok': False, 'message': 'not found'}), 404
+        return jsonify({'ok': False, 'error': 'not found'}), 404
     return jsonify({'ok': True, 'data': snap})
 
 
@@ -282,11 +283,13 @@ def api_status():
     return jsonify({
         'ok': True,
         'state': TASK_STATE,
-        'data_files': {
-            'ai_daily': os.path.exists(os.path.join(DATA_DIR, 'ai_daily_latest.json')),
-            'github': os.path.exists(os.path.join(DATA_DIR, 'github_trending_latest.json')),
-            'arxiv': os.path.exists(os.path.join(DATA_DIR, 'arxiv_latest.json')),
-            'hf': os.path.exists(os.path.join(DATA_DIR, 'hf_latest.json')),
+        'data': {
+            'files': {
+                'ai_daily': os.path.exists(os.path.join(DATA_DIR, 'ai_daily_latest.json')),
+                'github': os.path.exists(os.path.join(DATA_DIR, 'github_trending_latest.json')),
+                'arxiv': os.path.exists(os.path.join(DATA_DIR, 'arxiv_latest.json')),
+                'hf': os.path.exists(os.path.join(DATA_DIR, 'hf_latest.json')),
+            },
         },
         'now': _now_iso(),
     })

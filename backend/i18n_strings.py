@@ -132,6 +132,8 @@ STRINGS = {
         'history.col.date': 'Captured',
         'history.open': 'Open snapshot',
         'history.delete': 'Delete',
+        'history.badge': 'viewing snapshot',
+        'history.back': '← back to live',
 
         # Settings
         'settings.title': 'Settings',
@@ -289,6 +291,8 @@ STRINGS = {
         'history.col.date': '采集时间',
         'history.open': '打开快照',
         'history.delete': '删除',
+        'history.badge': '正在查看历史快照',
+        'history.back': '← 返回最新',
 
         'settings.title': '设置',
         'settings.deck': '调校控制台。偏好仅存储在当前浏览器。',

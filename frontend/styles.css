@@ -1000,6 +1000,35 @@ html[data-theme="light"] .tool-card {
 .modal-item-title { font-size: 14px; color: var(--paper); margin-bottom: 2px; }
 .modal-item-sub { font-size: 11px; color: var(--txt-3); font-family: var(--font-mono); }
 
+.hist-snap-list { padding: 0; }
+.hist-snap {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 14px 26px;
+  border-bottom: 1px solid var(--line);
+  transition: background var(--t-fast);
+}
+.hist-snap:hover { background: var(--ink-2); }
+.hist-snap-iso { color: var(--txt-1); font-size: 13px; }
+.hist-snap-meta { display: flex; gap: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--txt-3); }
+.hist-snap-actions { display: flex; gap: 8px; }
+
+.snapshot-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  margin-left: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  border-radius: 999px;
+  font: 500 10.5px var(--font-tick);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
 /* ============================================================
    TOAST + PROGRESS
    ============================================================ */
