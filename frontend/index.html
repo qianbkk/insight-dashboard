@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Insight Dashboard · AI 日报 & GitHub 热门</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="bg-aurora"></div>
+<div class="bg-grid"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12L9 6L15 18L21 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="3" cy="12" r="1.5" fill="currentColor"/>
+        <circle cx="9" cy="6" r="1.5" fill="currentColor"/>
+        <circle cx="15" cy="18" r="1.5" fill="currentColor"/>
+        <circle cx="21" cy="12" r="1.5" fill="currentColor"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Insight Dashboard</h1>
+      <p class="sub">AI 日报 · GitHub 热门仓库 · 实时聚合</p>
+    </div>
+  </div>
+  <div class="status-pill" id="globalStatus">
+    <span class="dot"></span>
+    <span class="label">检查中...</span>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ===== AI 日报卡片 ===== -->
+  <section class="panel" id="panel-ai">
+    <div class="panel-head">
+      <div class="panel-title">
+        <div class="ico ai-ico">📡</div>
+        <div>
+          <h2>AI 日报</h2>
+          <p class="panel-sub">多源 RSS 聚合 · 相关性 + 时效性 + 源权威 三维评分</p>
+        </div>
+      </div>
+      <div class="panel-actions">
+        <button class="btn primary" id="btnFetchAi">
+          <span class="btn-label">立即抓取</span>
+          <span class="spinner"></span>
+        </button>
+        <button class="btn ghost" id="btnReloadAi">↻ 读取缓存</button>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="meta-item"><span class="meta-k">生成时间</span><span class="meta-v" id="aiGenerated">—</span></div>
+      <div class="meta-item"><span class="meta-k">RSS 源</span><span class="meta-v" id="aiSources">—</span></div>
+      <div class="meta-item"><span class="meta-k">原始条目</span><span class="meta-v" id="aiRaw">—</span></div>
+      <div class="meta-item"><span class="meta-k">去重后</span><span class="meta-v" id="aiUnique">—</span></div>
+    </div>
+
+    <div class="tabs" id="aiTabs">
+      <button class="tab active" data-tab="all">全部</button>
+      <button class="tab" data-tab="zh">中文</button>
+      <button class="tab" data-tab="en">English</button>
+      <div class="tab-spacer"></div>
+      <input class="search" id="aiSearch" placeholder="🔍 搜索标题/摘要..." />
+    </div>
+
+    <div class="list" id="aiList">
+      <div class="empty">点击「立即抓取」开始获取 AI 日报</div>
+    </div>
+  </section>
+
+  <!-- ===== GitHub 热门仓库卡片 ===== -->
+  <section class="panel" id="panel-gh">
+    <div class="panel-head">
+      <div class="panel-title">
+        <div class="ico gh-ico">★</div>
+        <div>
+          <h2>GitHub 热门仓库</h2>
+          <p class="panel-sub">官方 Trending + REST API 搜索 · 多维度合成评分</p>
+        </div>
+      </div>
+      <div class="panel-actions">
+        <button class="btn primary" id="btnFetchGh">
+          <span class="btn-label">立即抓取</span>
+          <span class="spinner"></span>
+        </button>
+        <button class="btn ghost" id="btnReloadGh">↻ 读取缓存</button>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="meta-item"><span class="meta-k">生成时间</span><span class="meta-v" id="ghGenerated">—</span></div>
+      <div class="meta-item"><span class="meta-k">不重复仓库</span><span class="meta-v" id="ghUnique">—</span></div>
+      <div class="meta-item"><span class="meta-k">抓取源</span><span class="meta-v">Trending × API</span></div>
+    </div>
+
+    <div class="tabs" id="ghTabs">
+      <button class="tab active" data-tab="composite">综合 Top</button>
+      <button class="tab" data-tab="trending_daily">今日</button>
+      <button class="tab" data-tab="trending_weekly">本周</button>
+      <button class="tab" data-tab="trending_monthly">本月</button>
+      <button class="tab" data-tab="recent_7d_popular">近期热门</button>
+      <button class="tab" data-tab="active_30d">持续活跃</button>
+      <div class="tab-spacer"></div>
+      <input class="search" id="ghSearch" placeholder="🔍 搜索仓库名/描述..." />
+    </div>
+
+    <div class="list" id="ghList">
+      <div class="empty">点击「立即抓取」开始获取 GitHub 热门仓库</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footbar">
+  <span>Insight Dashboard · 2026.6</span>
+  <span class="foot-sep">·</span>
+  <span>数据每点击实时抓取，无缓存依赖</span>
+  <span class="foot-sep">·</span>
+  <span>API: <a href="/api/status" target="_blank">/api/status</a></span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
